@@ -16,7 +16,7 @@ app.use(cors());
 
 
 app.use("/healthcheck", (req, res) => {
-    res.status(200).send("ok");
+    res.status(200).send("ok -----");
   });
 app.use(`/api/${process.env.API_V1}/todo`, todoRoutes);
 
