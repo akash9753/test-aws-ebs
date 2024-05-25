@@ -3,6 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cors from "cors";
+import PrefrenceTotal from "./models/PrefrenceTotal.js";
+
 
 const PORT = process.env.PORT || 8000;
 connectDB();
@@ -21,8 +23,14 @@ app.get("/", (req, res) => {
   res.send("working...............");
 });
 
-app.get("/demo", (req, res) => {
-  res.send(demo);
+app.get("/demo", async (req, res) => {
+  try{
+   const result = await PrefrenceTotal.find();
+   res.send(result);
+  }catch(error){
+
+  }
+  
 });
 
 app.listen(PORT, () => {
