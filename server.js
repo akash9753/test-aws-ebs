@@ -2,9 +2,11 @@ dotenv.config();
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import connectDB from "./config/db.js";
+import connectDB from "./src/config/db.js";
 import cors from "cors";
-import PrefrenceTotal from "./models/PrefrenceTotal.js";
+import PrefrenceTotal from "./src/meal/PrefrenceTotalModel.js";
+
+import PrefrenceTotalRouter from "./src/meal/PrefrenceTotalRoute.js"
 
 const app = express();
 app.use(express.json());
@@ -21,6 +23,8 @@ app.get("/demo", async (req, res) => {
     res.send(result);
   } catch (error) {}
 });
+
+app.use("/meal", PrefrenceTotalRouter)
 
 
 connectDB();
