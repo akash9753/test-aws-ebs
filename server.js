@@ -1,33 +1,23 @@
-require('dotenv').config();
+dotenv.config();
+import express from "express";
+import dotenv from "dotenv";
 
-const express = require('express');
+import connectDB from "./config/db.js";
+
+import cors from "cors";
+const port = process.env.PORT || 8000;
+connectDB();
 const app = express();
-const connectDB = require('./config/db.js');
-const mongoose = require("mongoose");
-const cors = require("cors");
 
-//ROUTE IMPORTS
-const todoRoutes = require('./routes/todo/index.js');
+app.use(express.json({ limit: "30mb", extended: true }));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
-//APP SETTINGS
-app.use(express.json());
-const PORT = process.env.PORT || 5050;
 app.use(cors());
 
-
-app.use("/healthcheck", (req, res) => {
-    res.status(200).send("ok working ....");
-  });
-app.use(`/api/${process.env.API_V1}/todo`, todoRoutes);
-
-//APP initialization
-connectDB();
-mongoose.connection.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port -- ${PORT}`);
-    });
+app.get("/", (req, res) => {
+  res.send("working...............");
 });
-//APP connection error
-mongoose.connection.on("error", (error) => {
-    console.log("Error connecting to db: ", error);
-  });
+
+app.listen(port, () => {
+  console.log(`server started at port 7000`);
+});
