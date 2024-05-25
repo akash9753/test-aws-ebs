@@ -1,38 +1,35 @@
 dotenv.config();
 import express from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import PrefrenceTotal from "./models/PrefrenceTotal.js";
 
-
-const PORT = process.env.PORT || 8000;
-connectDB();
 const app = express();
-
-const demo = [
-  { name: "akash" },
-  {name: "varun",},
-];
-
-app.use(express.json({ limit: "30mb", extended: true }));
-app.use(express.urlencoded({ limit: "30mb", extended: true }));
+app.use(express.json());
+const PORT = process.env.PORT || 5050;
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("working...............");
+  res.status(200).send("Working.....");
 });
 
 app.get("/demo", async (req, res) => {
-  try{
-   const result = await PrefrenceTotal.find();
-   res.send(result);
-  }catch(error){
-
-  }
-  
+  try {
+    const result = await PrefrenceTotal.find();
+    res.send(result);
+  } catch (error) {}
 });
 
-app.listen(PORT, () => {
-  console.log(`server started at port 7000`);
+
+connectDB();
+mongoose.connection.once("open", () => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port -- ${PORT}`);
+  });
+});
+
+mongoose.connection.on("error", (error) => {
+  console.log("Error connecting to db: ", error);
 });
