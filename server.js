@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 //ROUTE IMPORTS
-const todoRoutes = require('./routes/todo');
+const todoRoutes = require('./routes/todo/index.js');
 
 //APP SETTINGS
 app.use(express.json());
