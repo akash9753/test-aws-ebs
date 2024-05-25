@@ -16,7 +16,7 @@ app.use(cors());
 
 
 app.use("/healthcheck", (req, res) => {
-    res.status(200).send("ok -----");
+    res.status(200).send("ok working");
   });
 app.use(`/api/${process.env.API_V1}/todo`, todoRoutes);
 
@@ -24,7 +24,7 @@ app.use(`/api/${process.env.API_V1}/todo`, todoRoutes);
 connectDB();
 mongoose.connection.once('open', () => {
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port -- ${PORT}`);
     });
 });
 //APP connection error
