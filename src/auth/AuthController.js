@@ -101,7 +101,7 @@ export const login = async (req, res, next) => {
   });
 
   res.cookie("accessToken", accessToken, {
-    domain: process.env.NODE_ENV === 'production' ? 'pghustul.xyz' : 'localhost',
+    domain: process.env.NODE_ENV === 'production' ? 'pghustul.xyz' : 'https://chipper-biscochitos-baa71e.netlify.app',
     sameSite: 'None', // 'None' allows cross-site cookie
     secure: true, // ensure cookies are sent over HTTPS
     maxAge: 1000 * 60 * 60, // 1h
