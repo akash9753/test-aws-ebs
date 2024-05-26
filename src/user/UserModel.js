@@ -1,18 +1,61 @@
 import mongoose from "mongoose";
 
-const PrefrenceTotalSchema = new mongoose.Schema(
-  {
-    date: { type: String, required: true },
-    dayName: { type: String, required: true },
-    lunch: { type: [String] },
-    breakfast: { type: [String] },
-    dinner: { type: [String] },
+const address = new mongoose.Schema({
+  permanentAddress: {
+      type: String,
   },
+  temproryAddress: {
+      type: String,
+  },
+});
+
+const userSchema = new mongoose.Schema(
   {
-    timestamps: true,
-  }
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    mobile: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    confirmPassword: {
+      type: String,
+      required: true,
+    },
+    profileImage: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    address: {
+      type: [address],
+      required: false,
+    },
+    role: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
 );
 
-const PrefrenceTotal = mongoose.model("PrefrenceTotal", PrefrenceTotalSchema);
+const UserModel = mongoose.model("User", userSchema);
 
-export default PrefrenceTotal;
+export default UserModel;

@@ -5,11 +5,28 @@ import mongoose from "mongoose";
 import connectDB from "./src/config/db.js";
 import cors from "cors";
 import PrefrenceTotal from "./src/meal/PrefrenceTotalModel.js";
+import { globalErrorHandler } from "./src/common/middleware/globalErrorHandler.js";
+import cookieParser from "cookie-parser";
+connectDB();
 
-import PrefrenceTotalRouter from "./src/meal/PrefrenceTotalRoute.js"
+//Router
+import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js"
+import UserRoute from "./src/user/UserRoute.js"
+import AuthRoute from "./src/auth/AuthRoute.js"
+
 
 const app = express();
+app.use(
+  cors({
+      //todo move to .env
+      origin: ["http://localhost:5173"],
+      credentials: true,
+  }),
+);
+
 app.use(express.json());
+app.use(cookieParser());
+
 const PORT = process.env.PORT || 5050;
 app.use(cors());
 
@@ -24,10 +41,12 @@ app.get("/demo", async (req, res) => {
   } catch (error) {}
 });
 
-app.use("/meal", PrefrenceTotalRouter)
+app.use("/meal", PrefrenceTotalRoute)
+app.use("/user", UserRoute)
+app.use("/auth",AuthRoute)
 
+app.use(globalErrorHandler);
 
-connectDB();
 mongoose.connection.once("open", () => {
   app.listen(PORT, () => {
     console.log(`Server running on port -- ${PORT}`);
