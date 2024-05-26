@@ -4,24 +4,36 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import connectDB from "./src/config/db.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import { createServer } from "http"; // Import http
+import { Server } from "socket.io"; // Import socket.io
+
 import PrefrenceTotal from "./src/meal/PrefrenceTotalModel.js";
 import { globalErrorHandler } from "./src/common/middleware/globalErrorHandler.js";
-import cookieParser from "cookie-parser";
+
 connectDB();
 
-//Router
+// Router
 import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js";
 import UserRoute from "./src/user/UserRoute.js";
 import AuthRoute from "./src/auth/AuthRoute.js";
 
 const app = express();
+const server = createServer(app); // Create a new HTTP server
+const io = new Server(server, {
+  cors: {
+    origin: process.env.NODE_ENV === "production"
+      ? "https://your-frontend-production-domain.com"
+      : "http://localhost:5173",
+    credentials: true,
+  }
+});
+
 app.use(
   cors({
-    //todo move to .env
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://your-frontend-production-domain.com"
-        : "http://localhost:5173",
+    origin: process.env.NODE_ENV === "production"
+      ? "https://your-frontend-production-domain.com"
+      : "http://localhost:5173",
     credentials: true,
   })
 );
@@ -30,7 +42,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 const PORT = process.env.PORT || 5050;
-app.use(cors());
+
+// Setup a simple connection event for Socket.IO
+io.on("connection", (socket) => {
+  console.log("a user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
 
 app.get("/", (req, res) => {
   res.status(200).send("Working...");
@@ -50,7 +69,7 @@ app.use("/auth", AuthRoute);
 app.use(globalErrorHandler);
 
 mongoose.connection.once("open", () => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server running on port -- ${PORT}`);
   });
 });
@@ -58,3 +77,5 @@ mongoose.connection.once("open", () => {
 mongoose.connection.on("error", (error) => {
   console.log("Error connecting to db: ", error);
 });
+
+export { io }; 

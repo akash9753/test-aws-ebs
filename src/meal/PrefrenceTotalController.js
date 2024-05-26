@@ -1,12 +1,13 @@
+import { io } from "../../server.js";
 import PrefrenceTotalModel from "./PrefrenceTotalModel.js";
-
+import createHttpError from "http-errors";
 export const getPrefrenceTotalCount = async (req, res) => {
   const result = await PrefrenceTotalModel.find();
   const total = result.length;
   res.status(200).json({ success: true, total, data: result });
 };
 
-export const mealPrefrenceUpdate = async (req, res) => {
+export const mealPrefrenceUpdate = async (req, res, next) => {
   const { mealdayId, prefrence, value } = req.body;
 
   if (!mealdayId || !prefrence || typeof value !== "boolean") {
@@ -33,8 +34,8 @@ export const mealPrefrenceUpdate = async (req, res) => {
   }
 
   const updatedMealTotal =  await PrefrenceTotalModel.find();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  // io.emit("mealPreferenceUpdated", updatedMealTotal);
+  
+  io.emit("mealPreferenceUpdated", updatedMealTotal);
 
   res.json({ status: "success", data: updatedPrefrence });
 };
