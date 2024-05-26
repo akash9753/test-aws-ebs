@@ -14,4 +14,11 @@ router.get(
   asyncWrapper(PrefrenceTotalController.getPrefrenceTotalCount)
 );
 
+router.get(
+  "/prefrenceUpdate",
+  authenticate,
+  canAccess([Roles.USER]),
+  asyncWrapper(PrefrenceTotalController.mealPrefrenceUpdate)
+);
+
 export default router;

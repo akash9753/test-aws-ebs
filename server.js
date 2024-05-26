@@ -10,18 +10,20 @@ import cookieParser from "cookie-parser";
 connectDB();
 
 //Router
-import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js"
-import UserRoute from "./src/user/UserRoute.js"
-import AuthRoute from "./src/auth/AuthRoute.js"
-
+import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js";
+import UserRoute from "./src/user/UserRoute.js";
+import AuthRoute from "./src/auth/AuthRoute.js";
 
 const app = express();
 app.use(
   cors({
-      //todo move to .env
-      origin: ["http://localhost:5173"],
-      credentials: true,
-  }),
+    //todo move to .env
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://your-frontend-production-domain.com"
+        : "http://localhost:5173",
+    credentials: true,
+  })
 );
 
 app.use(express.json());
@@ -41,9 +43,9 @@ app.get("/demo", async (req, res) => {
   } catch (error) {}
 });
 
-app.use("/meal", PrefrenceTotalRoute)
-app.use("/user", UserRoute)
-app.use("/auth",AuthRoute)
+app.use("/meal", PrefrenceTotalRoute);
+app.use("/user", UserRoute);
+app.use("/auth", AuthRoute);
 
 app.use(globalErrorHandler);
 
