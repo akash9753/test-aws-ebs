@@ -14,7 +14,7 @@ router.get(
   asyncWrapper(PrefrenceTotalController.getPrefrenceTotalCount)
 );
 
-router.get(
+router.post(
   "/prefrenceUpdate",
   authenticate,
   canAccess([Roles.USER]),
