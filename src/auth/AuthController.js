@@ -101,11 +101,13 @@ export const login = async (req, res, next) => {
   });
 
   res.cookie("accessToken", accessToken, {
-    domain: "localhost",
-    sameSite: "strict",
+    domain: "pghustul.xyz", // use the base domain
+    sameSite: 'None', // 'None' allows cross-site cookie
+    secure: true, // ensure cookies are sent over HTTPS
     maxAge: 1000 * 60 * 60, // 1h
-    httpOnly: true, // Very important
+    httpOnly: true, // important for security
   });
+  
 
   res.json({ status: true });
 };
