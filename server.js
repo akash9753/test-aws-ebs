@@ -23,7 +23,7 @@ const server = createServer(app); // Create a new HTTP server
 const io = new Server(server, {
   cors: {
     origin: process.env.NODE_ENV === "production"
-      ? "https://chipper-biscochitos-baa71e.netlify.app"
+      ? "https://pghustul.netlify.app"
       : "http://localhost:5173",
     credentials: true,
   }
@@ -32,7 +32,7 @@ const io = new Server(server, {
 app.use(
   cors({
     origin: process.env.NODE_ENV === "production"
-      ? "https://chipper-biscochitos-baa71e.netlify.app"
+      ? "https://pghustul.netlify.app"
       : "http://localhost:5173",
     credentials: true,
   })
