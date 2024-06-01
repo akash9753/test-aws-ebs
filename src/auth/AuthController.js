@@ -57,7 +57,7 @@ export const register = async (req, res, next) => {
   delete newUserData.password;
   delete newUserData.confirmPassword;
 
-  res.status(200).json({ success: true, data:newUserData });
+  res.status(200).json({ success: true, data: newUserData });
 };
 
 export const login = async (req, res, next) => {
@@ -92,24 +92,30 @@ export const login = async (req, res, next) => {
   // console.log(`payload`,payload);
 
   let privateKey = process.env.SECRET_KEY;
-//   console.log(privateKey);
+  //   console.log(privateKey);
 
   const accessToken = sign(payload, privateKey, {
     algorithm: "HS256",
     expiresIn: "1h",
     issuer: "auth",
   });
+  const cookieName = `accessToken_${user._id}`;
 
-  res.cookie("accessToken", accessToken, {
-    domain: process.env.NODE_ENV === 'production' ? 'pghustul.xyz' : 'https://chipper-biscochitos-baa71e.netlify.app',
-    sameSite: 'None', // 'None' allows cross-site cookie
-    secure: true, // ensure cookies are sent over HTTPS
-    maxAge: 1000 * 60 * 60, // 1h
-    httpOnly: true, // important for security
-  });
+  // res.cookie(cookieName, accessToken, {
+  //   //domain: process.env.NODE_ENV === 'production' ? 'pghustul.xyz' : 'https://chipper-biscochitos-baa71e.netlify.app',
+  //   domain:
+  //     process.env.NODE_ENV === "production"
+  //       ? "https://chipper-biscochitos-baa71e.netlify.app"
+  //       : "localhost",
+  //   sameSite: "None", // 'None' allows cross-site cookie
+  //   secure: true, // ensure cookies are sent over HTTPS
+  //   maxAge: 1000 * 60 * 60, // 1h
+  //   httpOnly: true, // important for security
+  // });
+
   
 
-  res.json({ status: true });
+  res.json({ status: true,data:user, token: accessToken });
 };
 
 export const self = async (req, res) => {
@@ -120,15 +126,18 @@ export const self = async (req, res) => {
   const user = await UserModel.findOne({ _id: req.auth.userId }).lean();
   delete user.password;
   delete user.confirmPassword;
-  res.json({ status: true, data:user });
+  res.json({ status: true, data: user });
 };
 
 export const logout = async (req, res, next) => {
-    try {
-        res.clearCookie("accessToken");
-        res.json({});
-    } catch (err) {
-        next(err);
-        return;
-    }
+  try {
+    const cookieNames = Object.keys(req.cookies);
+    
+    console.log(cookieNames[0]);
+    res.clearCookie(cookieNames[0]);
+    res.json({});
+  } catch (err) {
+    next(err);
+    return;
+  }
 };
