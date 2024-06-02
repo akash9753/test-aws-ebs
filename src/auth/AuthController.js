@@ -57,7 +57,7 @@ export const register = async (req, res, next) => {
   delete newUserData.password;
   delete newUserData.confirmPassword;
 
-  res.status(200).json({ success: true, data: newUserData });
+  res.status(200).json({ status: true, data: newUserData });
 };
 
 export const login = async (req, res, next) => {
