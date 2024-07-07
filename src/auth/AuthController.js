@@ -74,7 +74,7 @@ export const login = async (req, res, next) => {
   }
   const { email, password } = req.body;
 
-  const user = await await UserModel.findOne({ email });
+  const user = await UserModel.findOne({ email });
   if (!user) {
     const error = createHttpError(400, "Email or password does not match.");
     next(error);

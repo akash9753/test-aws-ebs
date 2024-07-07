@@ -74,3 +74,30 @@ export const updateMenu = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getMealPreferenceCount = async (req, res, next) => {
+  const { date, mealType } = req.body;
+
+  if (!date || !mealType) {
+    return next(createHttpError(400, "Date and mealType are required"));
+  }
+
+  try {
+    const result = await PrefrenceTotalModel.findOne({ date });
+
+    if (!result) {
+      return next(createHttpError(404, "No record found for the given date"));
+    }
+
+    const mealArray = result[mealType];
+    if (!mealArray) {
+      return next(createHttpError(400, "Invalid mealType"));
+    }
+
+    const count = mealArray.length;
+
+    res.status(200).json({ success: true, count });
+  } catch (error) {
+    next(error);
+  }
+};
