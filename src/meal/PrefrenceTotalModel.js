@@ -7,6 +7,9 @@ const PrefrenceTotalSchema = new mongoose.Schema(
     lunch: { type: [String] },
     breakfast: { type: [String] },
     dinner: { type: [String] },
+    lunchMenu: { type: [String] },
+    breakfastMenu:{type: [String] },
+    dinnerMenu:{type: [String]}
   },
   {
     timestamps: true,

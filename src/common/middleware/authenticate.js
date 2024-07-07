@@ -37,13 +37,10 @@ const authenticate = (req, res, next) => {
   console.log(req.headers);
   try {
     const authHeader = req.headers.authorization;
-
+     console.log(`authHeader`,authHeader);
     // Bearer eyjllsdjfljlasdjfljlsadjfljlsdf
     if (authHeader && authHeader.split(" ")[1] !== "undefined") {
       const token = authHeader.split(" ")[1];
-      if (!token) {
-        throw new createHttpError.Unauthorized("Missing token");
-      }
 
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
@@ -54,6 +51,8 @@ const authenticate = (req, res, next) => {
       };
 
       next();
+    }else{
+      return next(new createHttpError.Unauthorized("missing token --"));
     }
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {

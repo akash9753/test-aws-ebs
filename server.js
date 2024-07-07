@@ -22,18 +22,24 @@ const app = express();
 const server = createServer(app); // Create a new HTTP server
 const io = new Server(server, {
   cors: {
-    origin: process.env.NODE_ENV === "production"
-      ? "https://pghustul.netlify.app"
-      : "http://localhost:5173",
+    origin: [
+      process.env.NODE_ENV === "production"
+        ? "https://pghustul.netlify.app"
+        : "http://localhost:5173",
+      "exp://192.168.1.18:8081" // React Native app origin
+    ],
     credentials: true,
   }
 });
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production"
-      ? "https://pghustul.netlify.app"
-      : "http://localhost:5173",
+    origin: [
+      process.env.NODE_ENV === "production"
+        ? "https://pghustul.netlify.app"
+        : "http://localhost:5173",
+      "exp://192.168.1.18:8081" // React Native app origin
+    ],
     credentials: true,
   })
 );
@@ -61,6 +67,8 @@ app.get("/demo", async (req, res) => {
     res.send(result);
   } catch (error) {}
 });
+
+console.log("called");
 
 app.use("/meal", PrefrenceTotalRoute);
 app.use("/user", UserRoute);

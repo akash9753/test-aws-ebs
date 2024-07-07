@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 const { sign } = jwt;
 
 export const register = async (req, res, next) => {
+  console.log("called register",req);
   const result = validationResult(req);
   if (!result.isEmpty()) {
     return next(createHttpError(400, result.array()[0].msg));
@@ -23,6 +24,9 @@ export const register = async (req, res, next) => {
     city,
     country,
     address,
+    pgcode,
+    roomno,
+    sharing
   } = req.body;
 
   const existingUser = await UserModel.findOne({ email });
@@ -48,6 +52,9 @@ export const register = async (req, res, next) => {
   user.address = [];
   user.profileImage = "";
   user.role = Roles.USER;
+  user.pgcode = pgcode;
+  user.roomno = roomno;
+  user.sharing = sharing;
 
   console.log(user);
 

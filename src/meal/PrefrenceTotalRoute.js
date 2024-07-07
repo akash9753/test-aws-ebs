@@ -21,4 +21,7 @@ router.post(
   asyncWrapper(PrefrenceTotalController.mealPrefrenceUpdate)
 );
 
+router.patch("/updateMenu",authenticate,
+canAccess([Roles.SUPER_ADMIN]), PrefrenceTotalController.updateMenu);
+
 export default router;

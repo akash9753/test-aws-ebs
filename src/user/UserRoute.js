@@ -7,8 +7,8 @@ import { Roles } from "../common/constants/constant.js";
 
 router.get(
   "/list",
-  authenticate,
-  canAccess([Roles.SUPER_ADMIN]),
+   authenticate,
+   canAccess([Roles.SUPER_ADMIN]),
   UserController.getList
 );
 

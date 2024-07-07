@@ -52,6 +52,16 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    pgcode:{
+        type: String,
+        required: true,
+    },
+    roomno:{
+      type: Number,
+    },
+    sharing:{
+      type: Number,
+    },
   },
   { timestamps: true }
 );
