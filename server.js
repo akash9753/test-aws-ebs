@@ -25,7 +25,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       process.env.NODE_ENV === "production"
-        ? "https://pghustul.netlify.app"
+        ? "https://mutliappakash.netlify.app"
         : "http://localhost:5173",
       "exp://192.168.1.18:8081" // React Native app origin
     ],
@@ -37,7 +37,7 @@ app.use(
   cors({
     origin: [
       process.env.NODE_ENV === "production"
-        ? "https://pghustul.netlify.app"
+        ? "https://mutliappakash.netlify.app"
         : "http://localhost:5173",
       "exp://192.168.1.18:8081" // React Native app origin
     ],
