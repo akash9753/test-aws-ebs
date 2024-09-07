@@ -17,6 +17,7 @@ connectDB();
 import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js";
 import UserRoute from "./src/user/UserRoute.js";
 import AuthRoute from "./src/auth/AuthRoute.js";
+import rseumeFormRoute from "./src/resume/resumeFormRoutes.js"
 
 const app = express();
 const server = createServer(app); // Create a new HTTP server
@@ -73,6 +74,7 @@ console.log("called");
 app.use("/meal", PrefrenceTotalRoute);
 app.use("/user", UserRoute);
 app.use("/auth", AuthRoute);
+app.use("/resume",rseumeFormRoute)
 
 app.use(globalErrorHandler);
 
