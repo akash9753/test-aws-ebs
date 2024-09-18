@@ -11,8 +11,8 @@ import { Roles } from "../common/constants/constant.js";
 
 router.get(
   "/allResumeByUserId/:id",
-  authenticate,
-  canAccess([Roles.SUPER_ADMIN, Roles.USER]),
+  // authenticate,
+  // canAccess([Roles.SUPER_ADMIN, Roles.USER]),
   asyncWrapper(ResumeFromController.getAllResumesByUserId)
 );
 router.get(
@@ -23,8 +23,8 @@ router.get(
 );
 router.post(
   "/formInfo",
-  authenticate,
-  canAccess([Roles.SUPER_ADMIN, Roles.USER]),
+  // authenticate,
+  // canAccess([Roles.SUPER_ADMIN, Roles.USER]),
 //   uploadImage.any(),
   asyncWrapper(ResumeFromController.createResume)
 );

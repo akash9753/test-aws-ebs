@@ -18,6 +18,7 @@ import PrefrenceTotalRoute from "./src/meal/PrefrenceTotalRoute.js";
 import UserRoute from "./src/user/UserRoute.js";
 import AuthRoute from "./src/auth/AuthRoute.js";
 import rseumeFormRoute from "./src/resume/resumeFormRoutes.js"
+import DownloadPdf from "./src/oneClickResume/pdfDownload/Router.js"
 
 const app = express();
 const server = createServer(app); // Create a new HTTP server
@@ -59,7 +60,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res) => {
-  res.status(200).send("Working......");
+  res.status(200).send("Working.....");
 });
 
 app.get("/demo", async (req, res) => {
@@ -75,6 +76,7 @@ app.use("/meal", PrefrenceTotalRoute);
 app.use("/user", UserRoute);
 app.use("/auth", AuthRoute);
 app.use("/resume",rseumeFormRoute)
+app.use("/downloadPdf",DownloadPdf)
 
 app.use(globalErrorHandler);
 
