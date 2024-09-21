@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res) => {
-  res.status(200).send("Working.....");
+  res.status(200).send("Working");
 });
 
 app.get("/demo", async (req, res) => {
